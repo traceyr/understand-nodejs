@@ -1,9 +1,16 @@
-var fs = require('fs');
+'use strict';
 
-var readable = fs.createReadStream(__dirname + '/greet.txt', { encoding: 'utf8', highWaterMark: 16 * 1024 });
-var writable = fs.createWriteStream(__dirname + '/greetcopy.txt');
+let fs = require('fs');
 
-readable.on('data', function(chunk) {
-	console.log(chunk.length);
-	writable.write(chunk);
+let readable = fs.createReadStream(__dirname + '/greet.txt', {
+  //So it comes back as text instead of buffer
+  encoding: 'utf8',
+  //highWaterMark is size of chunks
+  highWaterMark: 16 * 1024
+});
+let writable = fs.createWriteStream(__dirname + '/greetcopy.txt');
+
+readable.on('data', function(chunk)  {
+  console.log(chunk.length);
+  writable.write(chunk);
 });
