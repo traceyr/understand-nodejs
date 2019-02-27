@@ -1,10 +1,11 @@
-var http = require('http');
-var fs = require('fs');
+'use strict';
+
+let http = require('http');
+let fs = require('fs');
 
 http.createServer(function(req, res) {
-    
+
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    var html = fs.readFileSync(__dirname + '/index.htm');
-    res.end(html);
-    
+    fs.createReadStream(__dirname + '/index.htm').pipe(res);
+
 }).listen(1337, '127.0.0.1');
