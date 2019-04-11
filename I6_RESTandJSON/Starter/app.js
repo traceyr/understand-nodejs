@@ -1,11 +1,13 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
+'use strict';
 
-var port = process.env.PORT || 3000;
+let express = require('express');
+let bodyParser = require('body-parser');
+let app = express();
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var jsonParser = bodyParser.json();
+let port = process.env.PORT || 3000;
+
+let urlencodedParser = bodyParser.urlencoded({ extended: false });
+let jsonParser = bodyParser.json();
 
 app.use('/assets', express.static(__dirname + '/public'));
 
@@ -30,14 +32,21 @@ app.post('/person', urlencodedParser, function(req, res) {
 	console.log(req.body.lastname);
 });
 
-app.post('/personjson', jsonParser, function(req, res) {
+app.get('/api/person/:id', function(req, res) {
+	//get that data from db
+	res.json({ firstname: 'John', lastname: 'Doe' });
+});
+
+app.post('api/personjson', jsonParser, function(req, res) {
+
+	// save to the db
 	res.send('Thank you for the JSON data!');
 	console.log(req.body.firstname);
 	console.log(req.body.lastname);
 });
 
-app.get('/api', function(req, res) {
-	res.json({ firstname: 'John', lastname: 'Doe' });
-});
+app.delete('/api/person/:id', function(req, res) {
+	// delete from db
+})
 
 app.listen(port);
